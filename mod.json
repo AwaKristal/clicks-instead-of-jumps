@@ -8,7 +8,7 @@
 	},
 	"id": "awakristal.clicks-instead-of-jumps",
 	"name": "Clicks instead of Jumps",
-	"version": "v1.0.0",
+	"version": "v1.0.1",
 	"developer": "AwaKristal",
 	"logo": "logo.png",
 	"description": "Replaces the Jumps counter on the end screen with a Clicks counter.",
@@ -16,6 +16,12 @@
 		"geode.node-ids": ">=v1.23.3"
 	},
 	"settings": {
+		"enabled": {
+			"name": "Enabled",
+			"description": "Enables or disables the Clicks counter on the end screen.",
+			"type": "bool",
+			"default": true
+		},
 		"keep-jumps": {
 			"name": "Keep Jumps",
 			"description": "If enabled, shows Clicks alongside Jumps instead of replacing it.",

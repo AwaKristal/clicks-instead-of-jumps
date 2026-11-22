@@ -20,6 +20,10 @@ class $modify(GJBaseGameLayer) {
     void handleButton(bool down, int button, bool isPlayer1) {
         GJBaseGameLayer::handleButton(down, button, isPlayer1);
 
+        if (!Mod::get()->getSettingValue<bool>("enabled")) {
+            return;
+        }
+
         if (down && PlayLayer::get()) {
             g_clicks++;
         }
@@ -29,6 +33,10 @@ class $modify(GJBaseGameLayer) {
 class $modify(EndLevelLayer) {
     void customSetup() {
         EndLevelLayer::customSetup();
+
+        if (!Mod::get()->getSettingValue<bool>("enabled")) {
+            return;
+        }
 
         bool keepJumps = Mod::get()->getSettingValue<bool>("keep-jumps");
         std::string clicksText = fmt::format("Clicks: {}", g_clicks);
@@ -49,24 +57,30 @@ class $modify(EndLevelLayer) {
             }
         }
 
-        if (jumpsLabel) {
-            if (!keepJumps) {
-                jumpsLabel->setString(clicksText.c_str());
-            } else {
-                auto clicksLabel = CCLabelBMFont::create(clicksText.c_str(), "goldFont.fnt");
-                clicksLabel->setScale(jumpsLabel->getScale());
+        if (!jumpsLabel) {
+            return;
+        }
 
-                CCPoint pos = jumpsLabel->getPosition();
-                clicksLabel->setPosition({ pos.x, pos.y - 24.f });
+        if (!keepJumps) {
+            jumpsLabel->setString(clicksText.c_str());
+            return;
+        }
 
-                jumpsLabel->getParent()->addChild(clicksLabel);
+        auto clicksLabel = CCLabelBMFont::create(clicksText.c_str(), "goldFont.fnt");
+        clicksLabel->setID("clicks-label"_spr);
+        clicksLabel->setScale(jumpsLabel->getScale());
 
-                if (auto* timeLabel = typeinfo_cast<CCLabelBMFont*>(
-                    m_mainLayer->getChildByIDRecursive("time-label")
-                )) {
-                    timeLabel->setPositionY(timeLabel->getPositionY() - 22.f);
-                }
-            }
+        CCPoint pos = jumpsLabel->getPosition();
+        clicksLabel->setPosition({ pos.x, pos.y - 24.f });
+
+        if (auto* parent = jumpsLabel->getParent()) {
+            parent->addChild(clicksLabel);
+        }
+
+        if (auto* timeLabel = typeinfo_cast<CCLabelBMFont*>(
+            m_mainLayer->getChildByIDRecursive("time-label")
+        )) {
+            timeLabel->setPositionY(timeLabel->getPositionY() - 22.f);
         }
     }
 };
