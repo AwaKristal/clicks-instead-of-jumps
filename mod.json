@@ -1,0 +1,26 @@
+{
+	"geode": "6.0.0-beta.1",
+	"gd": {
+		"win": "2.2091",
+		"android": "2.2091",
+		"mac": "2.2091",
+		"ios": "2.2091"
+	},
+	"id": "awakristal.clicks-instead-of-jumps",
+	"name": "Clicks instead of Jumps",
+	"version": "v1.0.0",
+	"developer": "AwaKristal",
+	"logo": "logo.png",
+	"description": "Replaces the Jumps counter on the end screen with a Clicks counter.",
+	"dependencies": {
+		"geode.node-ids": ">=v1.23.3"
+	},
+	"settings": {
+		"keep-jumps": {
+			"name": "Keep Jumps",
+			"description": "If enabled, shows Clicks alongside Jumps instead of replacing it.",
+			"type": "bool",
+			"default": false
+		}
+	}
+}
